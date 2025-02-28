@@ -12,8 +12,11 @@ class UserRepository:
             data['hashed_password'] = data.pop('password')
             new_user = UserModel(**data)
             session.add(new_user)
-            await session.flush()
-            await session.commit()
+            try:
+                await session.flush()
+                await session.commit()
+            except:
+                return False
             return True
     
     @classmethod

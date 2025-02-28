@@ -2,8 +2,12 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 import uvicorn
+import os
+
 from database import create_tables, delete_tables
 from auth import authRouter
+
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -27,4 +31,6 @@ app.add_middleware(
 app.include_router(authRouter)
 
 if __name__ == "__main__":
+   if not os.path.exists('backend/db'):
+      os.makedirs('backend/db')
    uvicorn.run("main:app", host="localhost", port=8000)

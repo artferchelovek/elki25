@@ -99,7 +99,12 @@ async def login_for_access_token(
 @authRouter.post("/register")
 async def register(user: SUserRegister) -> Token:
     user.password = get_password_hash(user.password)
-    await UserRepository.register_user(user)
+    if not await UserRepository.register_user(user):
+        raise HTTPException(
+            status_code=401,
+            detail="User with this username is already exists",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
         data={"sub": user.username}, expires_delta=access_token_expires
