@@ -3,7 +3,9 @@ from datetime import datetime
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
-database_url="sqlite+aiosqlite:///app.db"
+from settings import database_url
+
+
 engine = create_async_engine(database_url)
 new_session = async_sessionmaker(engine, expire_on_commit=False)
 
