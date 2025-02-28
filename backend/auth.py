@@ -98,10 +98,20 @@ async def login_for_access_token(
 
 @authRouter.post("/register")
 async def register(user: SUserRegister) -> Token:
-    user.hashed_password = get_password_hash(user.hashed_password)
+    user.password = get_password_hash(user.password)
     await UserRepository.register_user(user)
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
         data={"sub": user.username}, expires_delta=access_token_expires
     )
     return Token(access_token=access_token, token_type="bearer")
+
+@authRouter.get("/me", name="Прочитать информацию о залогинившемся пользователе")
+async def read_users_me(
+    current_user: Annotated[SUser, Depends(get_current_user)],
+):
+    return {"username": current_user.username,
+            "email": current_user.email,
+            "birthday": current_user.birthday,
+            "phone_number": current_user.phone_number
+    }
