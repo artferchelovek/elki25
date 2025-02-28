@@ -1,0 +1,37 @@
+#header {
+  width: 90vw;
+  background: white;
+  box-shadow: 0px 4px 64px -8px rgba(188, 154, 154, 0.25);
+
+  margin: 50px auto;
+  padding: 15px;
+
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+
+  border-radius: 20px;
+
+  .header-name {
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -4%;
+  }
+
+  .header-nav {
+    display: flex;
+    gap: 50px;
+    justify-content: space-between;
+
+    .header-link {
+      font-weight: 400;
+      font-size: 24px;
+    }
+  }
+
+  .header-login {
+    background: none;
+    font-size: 24px;
+    border: none;
+  }
+}
