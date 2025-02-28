@@ -1,3 +1,27 @@
+@font-face {
+  font-family: "Yandex Sans Text";
+  src: local("Yandex Sans Text"), url("./fonts/YandexSansDisplay-Regular.ttf");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Yandex Sans Text";
+  src: local("Yandex Sans Text"), url("./fonts/YandexSansText-Bold.ttf");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Yandex Sans Text";
+  src: local("Yandex Sans Text"), url("./fonts/YandexSansText-Thin.ttf");
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: "Yandex Sans Text";
+  src: local("Yandex Sans Text"), url("./fonts/YandexSansText-Medium.ttf");
+  font-weight: medium;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -10,4 +34,8 @@
 
 body {
   background: #f6f5f3;
+}
+
+button {
+  cursor: pointer;
 }

@@ -1,6 +1,7 @@
 import Header from "./Header/Header";
 import "./Main.css";
 import main1 from "../assets/main1.jpg";
+import { useNavigate } from "react-router";
 
 export default function Main() {
   return (
@@ -8,7 +9,7 @@ export default function Main() {
       <Header></Header>
 
       <div id="content">
-        <p className="main-recom">мы рекомендуем</p>
+        <p className="main-recom">Мы рекомендуем</p>
         <div className="content-info">
           <img className="main-image" src={main1} alt="" />
           <div className="main-content-text">
