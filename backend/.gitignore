@@ -1,0 +1,6 @@
+.venv/
+app.db
+__pycache__/
+test*.py
+test.db
+db
