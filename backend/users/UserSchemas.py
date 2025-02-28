@@ -1,5 +1,6 @@
 from pydantic import BaseModel, ConfigDict, Field
 from datetime import date
+from typing import Optional
 from enum import Enum
 
 
@@ -28,3 +29,5 @@ class SUser(BaseModel):
     phone_number: str = Field(pattern=r"(\+7|8)[0-9]{10}")
     model_config = ConfigDict(from_attributes=True)
     role: EUserRole
+
+    organized_events: Optional[list[int]]

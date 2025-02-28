@@ -67,6 +67,7 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     )
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        print(payload)
         username = payload.get("sub")
         if username is None:
             raise credentials_exception
@@ -116,6 +117,9 @@ async def read_users_me(
     current_user: Annotated[SUser, Depends(get_current_user)],
 ):
     return {"username": current_user.username,
+            "role": current_user.role,
+            "name": current_user.name,
+            "surname": current_user.surname,
             "email": current_user.email,
             "birthday": current_user.birthday,
             "phone_number": current_user.phone_number

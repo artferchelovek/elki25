@@ -1,8 +1,9 @@
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from datetime import date
 
 from database import *
-
+from events.EventModels import *
 
 class UserModel(Model):
     __tablename__ = "Users"
@@ -15,3 +16,8 @@ class UserModel(Model):
     birthday: Mapped[date]
     phone_number: Mapped[str]
     role: Mapped[str]
+
+    organized_events: Mapped[Optional[list["EventModel"]]] = relationship(
+        back_populates="organizers",
+        secondary="EventM2M"
+    )

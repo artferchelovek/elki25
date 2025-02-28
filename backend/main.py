@@ -14,8 +14,6 @@ async def lifespan(app: FastAPI):
    await create_tables()
    print("База готова")
    yield
-   #await delete_tables()
-   #print("База очищена")
 
 
 app = FastAPI(lifespan=lifespan, docs_url='/api/docs', openapi_url='/api/openapi.json')
