@@ -9,6 +9,7 @@ class UserRepository:
     async def register_user(cls, user: SUserRegister):
         async with new_session() as session:
             data = user.model_dump()
+            data['hashed_password'] = data.pop('password')
             new_user = UserModel(**data)
             session.add(new_user)
             await session.flush()
