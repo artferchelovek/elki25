@@ -1,6 +1,6 @@
 from typing import Annotated
 from datetime import datetime
-from fastapi import APIRouter, Depends, HTTPException, status, File, UploadFile
+from fastapi import APIRouter, Depends, HTTPException, File, UploadFile
 import random
 
 

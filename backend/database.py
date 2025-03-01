@@ -43,13 +43,10 @@ class EventModel(Model):
     description: Mapped[str]
     short_description: Mapped[str]
     event_datetime: Mapped[datetime]
-    place: Mapped[str] # пока не имплементировано
-    lat: Mapped[Optional[float]] # пока не имплементировано
-    lon: Mapped[Optional[float]]
     organizer_phone: Mapped[Optional[str]]
     organizer_tg: Mapped[Optional[str]]
     organizer_vk: Mapped[Optional[str]]
-    schedule: Mapped[Optional[str]] # пока не имплементировано
+    schedule: Mapped[Optional[str]]
     direction: Mapped[Optional[str]]
 
     photo: Mapped[list[EventPhoto]] = relationship()
@@ -63,6 +60,11 @@ class EventModel(Model):
         secondary=event_organizer_model,
         back_populates="organized_events"
     )
+    #---------------------------------------------------------
+    # Платформы
+    platform_id: Mapped[Optional[int]] = mapped_column(ForeignKey('Platform_places.id'))
+    #---------------------------------------------------------
+
 
 
 class UserModel(Model):
@@ -87,7 +89,10 @@ class UserModel(Model):
         back_populates="organizers"
     )
 
-
+    #---------------------------------------------------------
+    # Платформы
+    assigned_platform: Mapped[Optional[int]]
+    #---------------------------------------------------------
 
 class EventPhoto(Model):
     __tablename__ = "Event_photo"
@@ -96,13 +101,34 @@ class EventPhoto(Model):
     event_id: Mapped[int] = mapped_column(ForeignKey("Events.id"))
 
 
+#---------------------------------------------------------
+# Платформы
+""" class PlatformAdmin(Model):
+    __tablename__ = "Platform_admins"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    username: Mapped[str]
+    hashed_password: Mapped[str]
+    email: Mapped[str]
+    phone_number: Mapped[str]
+    assigned_platform: Mapped[PlatformPlace] = relationship(back_populates="assigned_admin") """
 
+class PlatformPlace(Model):
+    __tablename__ = "Platform_places"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str]
+    place: Mapped[str]
+    lat: Mapped[float]
+    lon: Mapped[float]
+    assigned_admin: Mapped[int] 
+    assigned_events: Mapped[Optional[list[EventModel]]] = relationship()
+    photo: Mapped[Optional[list[PlatformPhoto]]] = relationship()
 
-
-
-
-
-
+class PlatformPhoto(Model):
+    __tablename__ = "Platform_photos"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    filename: Mapped[str] = mapped_column(unique=True)
+    event_id: Mapped[int] = mapped_column(ForeignKey("Platform_places.id"))
+#---------------------------------------------------------
 
 async def create_tables():
    async with engine.begin() as conn:

@@ -15,7 +15,7 @@ class EventRepository:
             new_event = EventModel(**data)
             session.add(new_event)
             organizer = await session.get(UserModel, organizer.id)
-            await session.refresh(new_event, attribute_names=["organizers"])
+            await session.refresh(new_event, attribute_names=["organizers","platform_id"])
             new_event.organizers.append(organizer)
             try:
                 await session.flush()
@@ -23,7 +23,7 @@ class EventRepository:
             except:
                 return False
             return new_event.id
-        
+
     @classmethod
     async def get_event_by_id(cls, event_id: int) -> SEvent:
         async with new_session() as session:
@@ -80,7 +80,6 @@ class EventRepository:
             ans = []
             for res in result:
                 res_dict = res.__dict__
-                print(res_dict)
                 res_dict.pop('_sa_instance_state', None)
                 res_dict['organizers'] = [user.id for user in res_dict['organizers']]
                 res_dict['photo'] = [photo.filename for photo in res_dict['photo']]
