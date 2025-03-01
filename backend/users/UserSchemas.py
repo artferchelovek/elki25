@@ -31,5 +31,6 @@ class SUser(BaseModel):
     role: EUserRole
 
     organized_events: Optional[list[int]]
+    registered_at: Optional[list[int]]
 
     model_config = ConfigDict(from_attributes=True)

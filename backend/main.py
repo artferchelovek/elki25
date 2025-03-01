@@ -8,6 +8,8 @@ from database import create_tables, delete_tables
 from auth import authRouter
 from events.EventRouter import eventRouter
 from settings import file_dir
+from users.UserRouter import userRouter
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -28,6 +30,7 @@ app.add_middleware(
 
 app.include_router(authRouter)
 app.include_router(eventRouter)
+app.include_router(userRouter)
 
 from fastapi.staticfiles import StaticFiles
 

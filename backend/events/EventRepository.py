@@ -27,7 +27,12 @@ class EventRepository:
     @classmethod
     async def get_event_by_id(cls, event_id: int) -> SEvent:
         async with new_session() as session:
-            query = (select(EventModel).filter_by(id=event_id).options(selectinload(EventModel.organizers)).options(selectinload(EventModel.photo)))
+            query = (select(EventModel)
+                     .filter_by(id=event_id)
+                     .options(selectinload(EventModel.organizers))
+                     .options(selectinload(EventModel.photo))
+                     .options(selectinload(EventModel.visitors))
+                     )
             result = await session.execute(query)
             result = result.scalar()
             if result is None:
@@ -39,6 +44,7 @@ class EventRepository:
             res_dict.pop('_sa_instance_state', None)
             res_dict['organizers'] = [user.id for user in res_dict['organizers']]
             res_dict['photo'] = [photo.filename for photo in res_dict['photo']]
+            res_dict['visitors'] = [user.id for user in res_dict['visitors']]
             try:
                 event = SEvent.model_validate(res_dict)
             except:
@@ -65,7 +71,11 @@ class EventRepository:
     @classmethod
     async def get_all_events(cls):
         async with new_session() as session:
-            result = await session.execute(select(EventModel).options(selectinload(EventModel.organizers)).options(selectinload(EventModel.photo)))
+            result = await session.execute(select(EventModel)
+                                           .options(selectinload(EventModel.organizers))
+                                           .options(selectinload(EventModel.photo))
+                                           .options(selectinload(EventModel.visitors))
+                                           )
             result = result.scalars().all()
             ans = []
             for res in result:
@@ -74,5 +84,6 @@ class EventRepository:
                 res_dict.pop('_sa_instance_state', None)
                 res_dict['organizers'] = [user.id for user in res_dict['organizers']]
                 res_dict['photo'] = [photo.filename for photo in res_dict['photo']]
+                res_dict['visitors'] = [photo.visitors for photo in res_dict['visitors']]
                 ans.append(SEvent.model_validate(res_dict))
             return ans

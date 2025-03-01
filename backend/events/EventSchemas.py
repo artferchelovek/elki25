@@ -2,8 +2,6 @@ from pydantic import BaseModel, ConfigDict, Field
 from datetime import datetime
 from typing import Optional
 
-from database import *
-
 
 class SEventStart(BaseModel):
     event_name: str
@@ -19,10 +17,10 @@ class SEventStart(BaseModel):
     schedule: str # пока не имплементировано
     direction: str = Field(default='generic')
 
-    photo: Optional[list[str]] = []
-
-
 class SEvent(SEventStart):
     id: int
     organizers: list[int]
+    photo: Optional[list[str]] = []
+    visitors: Optional[list[int]] = []
+
     model_config = ConfigDict(from_attributes=True)

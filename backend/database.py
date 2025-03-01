@@ -20,13 +20,21 @@ class Model(DeclarativeBase):
 
 
 
-event_organizer_model = Table(
+# Связь ивент - организатор
+event_organizer_model = Table( 
     "event_organizers",
     Model.metadata,
     Column("event_id", ForeignKey("Events.id"), primary_key=True),
     Column("organizer_id", ForeignKey("Users.id"), primary_key=True),
 )
 
+# Связь ивент - посетитель
+event_visitor_model = Table(
+    "event_visitors",
+    Model.metadata,
+    Column("event_id", ForeignKey("Events.id"), primary_key=True),
+    Column("visitor_id", ForeignKey("Users.id"), primary_key=True),
+)
 
 class EventModel(Model):
     __tablename__ = "Events"
@@ -45,6 +53,11 @@ class EventModel(Model):
     direction: Mapped[Optional[str]]
 
     photo: Mapped[list[EventPhoto]] = relationship()
+    
+    visitors: Mapped[list[UserModel]] = relationship(
+        secondary=event_visitor_model,
+        back_populates="registered_at"
+    )
 
     organizers: Mapped[list[UserModel]] = relationship(
         secondary=event_organizer_model,
@@ -64,10 +77,16 @@ class UserModel(Model):
     phone_number: Mapped[str]
     role: Mapped[str]
 
+    registered_at: Mapped[list[EventModel]] = relationship(
+        secondary=event_visitor_model,
+        back_populates="visitors"
+    )
+
     organized_events: Mapped[Optional[list[EventModel]]] = relationship(
-            secondary=event_organizer_model,
+        secondary=event_organizer_model,
         back_populates="organizers"
     )
+
 
 
 class EventPhoto(Model):
