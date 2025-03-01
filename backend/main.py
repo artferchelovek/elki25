@@ -32,4 +32,4 @@ app.include_router(eventRouter)
 if __name__ == "__main__":
    if not os.path.exists('backend/db'):
       os.makedirs('backend/db')
-   uvicorn.run("main:app", host="localhost", port=8000)
+   uvicorn.run("main:app", host="0.0.0.0", port=8000)
