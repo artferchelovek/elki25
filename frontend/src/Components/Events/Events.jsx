@@ -2,20 +2,46 @@ import axios from "axios";
 import Header from "../Header/Header";
 import "./Events.css";
 import "./AddEvent.css";
-const api = "http://192.168.10.176:8000/event/add";
+const api = "http://192.168.0.181:8000/event/add";
 
 const token = localStorage.getItem("token");
-console.log(token);
 
 const header = {
   Authorization: `Bearer ${token}`,
   accept: "application/json",
-  biba: "zalupa",
 };
 
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 
 export default function Events() {
+  const navigate = useNavigate();
+  const [mp, setMp] = useState([]);
+
+  useEffect(() => {
+    async function getallmp() {
+      const response = await axios.get(
+        "http://192.168.0.181:8000/event/getAll"
+      );
+
+      const json = response.data;
+
+      json.sort(function (a, b) {
+        if (a.event_datetime > b.event_datetime) {
+          return -1;
+        }
+        if (a.event_datetime < b.event_datetime) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+      setMp(json.slice(0, 5));
+    }
+
+    getallmp();
+  }, []);
+
   return (
     <>
       <Header></Header>
@@ -26,23 +52,30 @@ export default function Events() {
         </div>
 
         <div id="active-list">
-          <div className="event">
-            <img
-              src="https://s.may9.ru/upload/resize_cache/iblock/c20/800_600_1/ceqs7tf35m8myz9sbhlxqtn32xzkt37p.jpg"
-              alt=""
-              className="event-img"
-            />
-            <p className="event-title">80 лет победы</p>
-            <p className="descr">
-              9 мая на сцене театра пройдет премьерный показ спектакля «Василий
-              Теркин».
-            </p>
-            <div className="event-date">
-              <p>12 марта 2025</p>
-              <p>12:00</p>
+          {mp.map((event) => (
+            <div key={event.id} className="event">
+              <img
+                src={`http://192.168.0.181:8000/files/${event.photo[0]}`}
+                alt=""
+                className="event-img"
+              />
+              <p className="event-title"> {event.event_name} </p>
+              <p className="descr">{event.short_description}</p>
+              <div className="event-date">
+                <p>{event.event_datetime.slice(0, 10)}</p>
+                <p>{event.event_datetime.slice(11, 16)}</p>
+              </div>
+              <button
+                onClick={() => {
+                  navigate();
+                }}
+                value={event.id}
+                className="event-open"
+              >
+                Подробнее
+              </button>
             </div>
-            <button className="event-open">Подробнее</button>
-          </div>
+          ))}
         </div>
       </div>
     </>
@@ -50,15 +83,43 @@ export default function Events() {
 }
 
 export function AddMP() {
+  const navigate = useNavigate();
+
+  const [step, setStep] = useState(1);
+
   const [data, setData] = useState({
     title: "",
     descr: "",
     shdescr: "",
     place: "",
     date: "",
+    time: "",
     direct: "",
-    phone: "",
+    phone: "+7",
+    new_date: "",
   });
+
+  function changeStep() {
+    if (step == 1) {
+      setStep(2);
+      document.getElementById("event1").classList.add("pass");
+      document.getElementById("event2").classList.remove("pass");
+    } else if (step == 2) {
+      setStep(3);
+      document.getElementById("event2").classList.add("pass");
+      document.getElementById("event3").classList.remove("pass");
+    } else if (step == 3) {
+      setStep(4);
+      document.getElementById("event3").classList.add("pass");
+      document.getElementById("event4").classList.remove("pass");
+    } else if (step == 4) {
+      const new_date = data.date + " " + data.time + ":00";
+      const date = new Date(new_date).toISOString();
+      console.log(date);
+      data.new_date = date;
+      CreateMP();
+    }
+  }
 
   function changeData(e) {
     const value = e.target.value;
@@ -73,46 +134,54 @@ export function AddMP() {
       event_name: data.title,
       description: data.descr,
       short_description: data.shdescr,
-      event_datetime: data.date,
+      event_datetime: data.new_date,
       place: data.place,
       organizer_phone: data.phone,
       schedule: "string",
       direction: data.direct,
+      organizer_vk: "string",
+      organizer_tg: "string",
     };
 
     console.table(userData);
 
     try {
       const response = await axios.post(api, userData, {
-        header: header,
+        headers: header,
       });
 
       console.log(response.status, response.data);
+
+      const formData = new FormData();
+      const image = document.getElementById("event-img-in");
+      console.log(image.files[0]);
+      formData.append("uploaded_file", image.files[0]);
+
+      const send = await axios.post(
+        api + "Photo/?event_id=" + response.data.id,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(send.data, send.status);
     } catch (e) {
       console.log(e);
     }
   }
 
-  useEffect(() => {
-    async function check() {
-      try {
-        const response = await axios.get("http://192.168.10.176:8000/auth/me", {
-          headers: header,
-        });
-
-        console.log(response.data);
-      } catch (e) {
-        console.log(e);
-      }
-    }
-
-    check();
-  }, []);
+  useEffect(() => {}, []);
   return (
     <>
-      <div className="events-block">
-        <p>Создать мероприятие</p>
-        <div className="event-input 1">
+      <div className="event-block">
+        <p className="step">{step} этап</p>
+        <div id="event1" className="event-content">
+          <div className="event-img">
+            <input type="file" name="image" id="event-img-in" />
+          </div>
           <input
             onChange={changeData}
             value={data.title}
@@ -120,22 +189,38 @@ export function AddMP() {
             placeholder="Название"
             type="text"
           />
-          <input
-            onChange={changeData}
-            value={data.descr}
-            name="descr"
-            placeholder="Описание"
-            type="text"
-          />
-          <input
+          <textarea
             onChange={changeData}
             value={data.shdescr}
             name="shdescr"
             placeholder="Краткое описание"
-            type="text"
-          />
+            id=""
+          ></textarea>
         </div>
-        <div className="event-input 2">
+        <div id="event2" className="event-content pass">
+          <textarea
+            onChange={changeData}
+            value={data.descr}
+            name="descr"
+            placeholder="Описание"
+            id=""
+          ></textarea>
+          <div className="split-div">
+            <input
+              onChange={changeData}
+              value={data.date}
+              name="date"
+              type="date"
+            />
+            <input
+              onChange={changeData}
+              value={data.time}
+              name="time"
+              type="time"
+            />
+          </div>
+        </div>
+        <div id="event3" className="event-content pass">
           <input
             onChange={changeData}
             value={data.place}
@@ -149,10 +234,10 @@ export function AddMP() {
           </datalist>
           <input
             onChange={changeData}
-            value={data.date}
-            name="date"
-            placeholder="Дата"
-            type="date"
+            value={data.phone}
+            name="phone"
+            placeholder="Контактный номер"
+            type="phone"
           />
           <input
             onChange={changeData}
@@ -161,16 +246,21 @@ export function AddMP() {
             placeholder="Направление"
             type="text"
           />
-          <input
-            onChange={changeData}
-            value={data.phone}
-            name="phone"
-            placeholder="Контакты"
-            type="phone"
-          />
         </div>
-        <button onClick={CreateMP}>Создать</button>
+
+        <div id="event4"></div>
+        <button onClick={changeStep} className="event-next">
+          Далее
+        </button>
       </div>
+    </>
+  );
+}
+
+export function CheckMP() {
+  return (
+    <>
+      <p className="">сеaс</p>
     </>
   );
 }

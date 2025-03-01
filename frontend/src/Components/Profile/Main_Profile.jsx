@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import DF_User from "./User";
 
-const api = "http://192.168.10.176:8000/auth/me";
+const api = "http://192.168.0.181:8000/auth/me";
 
 export default function SelectRole() {
   const [load, setLoad] = useState(false);

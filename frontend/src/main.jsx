@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App.jsx";
 import { BrowserRouter, Routes, Route } from "react-router";
 import Main from "./Components/Main.jsx";
-import Events, { AddMP } from "./Components/Events/Events.jsx";
+import Events, { AddMP, CheckMP } from "./Components/Events/Events.jsx";
 import Login from "./Components/Auth/Login.jsx";
 import SelectRole from "./Components/Profile/Main_Profile.jsx";
 import DF_User, { ORG_User } from "./Components/Profile/User.jsx";
@@ -17,6 +17,7 @@ createRoot(document.getElementById("root")).render(
 
       <Route path="events">
         <Route index element={<Events />} />
+        <Route path=":id" element={<CheckMP />} />
         <Route path="add" element={<AddMP />} />
       </Route>
 

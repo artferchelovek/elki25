@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 import "./Login.css";
 
-const api = "http://192.168.10.176:8000/auth/register";
+const api = "http://192.168.0.181:8000/auth/register";
 
 export default function Register() {
   const navigate = useNavigate();

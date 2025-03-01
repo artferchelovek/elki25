@@ -1,13 +1,13 @@
 @font-face {
   font-family: "Yandex Sans Text";
   src: local("Yandex Sans Text"), url("./fonts/YandexSansDisplay-Regular.ttf");
-  font-weight: normal;
+  font-weight: 400;
 }
 
 @font-face {
   font-family: "Yandex Sans Text";
   src: local("Yandex Sans Text"), url("./fonts/YandexSansText-Bold.ttf");
-  font-weight: bold;
+  font-weight: 800;
 }
 
 @font-face {
@@ -19,7 +19,7 @@
 @font-face {
   font-family: "Yandex Sans Text";
   src: local("Yandex Sans Text"), url("./fonts/YandexSansText-Medium.ttf");
-  font-weight: medium;
+  font-weight: 600;
 }
 
 * {
