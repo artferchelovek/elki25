@@ -22,8 +22,10 @@ async def event_add(event: SEventStart, current_user: Annotated[SUser, Depends(g
             status_code=403,
             detail="You do not have rights to add new events",
         )
-    await EventRepository.add_event(event, current_user)
-    return {"details": "Event created"}
+    id = await EventRepository.add_event(event, current_user)
+    if not id:
+        raise 
+    return {"details": "Event created", "id": id}
 
 @eventRouter.get('/get/{event_id}', name='Получить мероприятие по его айди')
 async def event_get_by_id(event_id: int):

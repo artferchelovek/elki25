@@ -7,7 +7,7 @@ from users.UserSchemas import *
 
 class EventRepository:
     @classmethod
-    async def add_event(cls, event: SEventStart, organizer: SUser) -> bool:
+    async def add_event(cls, event: SEventStart, organizer: SUser) -> int:
         async with new_session() as session:
             data = event.model_dump()
             new_event = EventModel(**data)
@@ -20,7 +20,7 @@ class EventRepository:
                 await session.commit()
             except:
                 return False
-            return True
+            return new_event.id
         
     @classmethod
     async def get_event_by_id(cls, event_id: int) -> SEvent:
