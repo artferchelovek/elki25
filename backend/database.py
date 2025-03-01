@@ -20,17 +20,6 @@ class Model(DeclarativeBase):
 
 
 
-""" class EventM2MModel(Model):
-    __tablename__ = "EventM2M"
-    organizer_id: Mapped[int] = mapped_column(
-        ForeignKey("Users.id", ondelete="CASCADE"),
-        primary_key=True,
-    )
-    event_id: Mapped[int] = mapped_column(
-        ForeignKey('Events.id', ondelete="CASCADE"),
-        primary_key=True,
-    ) """
-
 EventM2MModel = Table(
     "EventM2M",
     Model.metadata,

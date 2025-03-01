@@ -19,7 +19,7 @@ eventRouter = APIRouter(
 async def event_add(event: SEventStart, current_user: Annotated[SUser, Depends(get_current_user)]):
     if current_user.role == EUserRole.visitor:
         raise HTTPException(
-            status=403,
+            status_code=403,
             detail="You do not have rights to add new events",
         )
     await EventRepository.add_event(event, current_user)
