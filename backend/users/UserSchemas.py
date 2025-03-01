@@ -18,6 +18,7 @@ class SUserRegister(BaseModel):
     phone_number: str = Field(pattern=r"(\+7|8)[0-9]{10}")
     role: EUserRole
 
+
 class SUser(BaseModel):
     id: int
     username: str
@@ -27,7 +28,8 @@ class SUser(BaseModel):
     email: str
     birthday: date
     phone_number: str = Field(pattern=r"(\+7|8)[0-9]{10}")
-    model_config = ConfigDict(from_attributes=True)
     role: EUserRole
 
     organized_events: Optional[list[int]]
+
+    model_config = ConfigDict(from_attributes=True)
