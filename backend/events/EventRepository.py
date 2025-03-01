@@ -25,14 +25,31 @@ class EventRepository:
     @classmethod
     async def get_event_by_id(cls, event_id: int) -> SEvent:
         async with new_session() as session:
-            query = (select(EventModel).filter_by(id=event_id).options(selectinload(EventModel.organizers).load_only(UserModel.id)))
+            query = (select(EventModel).filter_by(id=event_id).options(selectinload(EventModel.organizers)).options(selectinload(EventModel.photo)))
             result = await session.execute(query)
             result = result.scalar()
             res_dict = result.__dict__
             res_dict.pop('_sa_instance_state', None)
             res_dict['organizers'] = [user.id for user in res_dict['organizers']]
+            res_dict['photo'] = [photo.filename for photo in res_dict['photo']]
             try:
                 event = SEvent.model_validate(res_dict)
             except:
                 return False
             return event
+        
+
+    @classmethod
+    async def add_photo_to_db(cls, filename: str, event_id: int) -> int:
+        async with new_session() as session:
+            new_photo = EventPhoto(
+                filename=str(event_id)+filename,
+                event_id=event_id
+            )
+            session.add(new_photo)
+            try:
+                await session.flush()
+                await session.commit()
+            except:
+                return False
+            return new_photo.id

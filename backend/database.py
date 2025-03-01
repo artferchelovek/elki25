@@ -20,11 +20,11 @@ class Model(DeclarativeBase):
 
 
 
-EventM2MModel = Table(
-    "EventM2M",
+event_organizer_model = Table(
+    "event_organizers",
     Model.metadata,
-    Column("left_id", ForeignKey("Events.id"), primary_key=True),
-    Column("right_id", ForeignKey("Users.id"), primary_key=True),
+    Column("event_id", ForeignKey("Events.id"), primary_key=True),
+    Column("organizer_id", ForeignKey("Users.id"), primary_key=True),
 )
 
 
@@ -44,8 +44,10 @@ class EventModel(Model):
     schedule: Mapped[Optional[str]] # пока не имплементировано
     direction: Mapped[Optional[str]]
 
+    photo: Mapped[list[EventPhoto]] = relationship()
+
     organizers: Mapped[list[UserModel]] = relationship(
-        secondary=EventM2MModel,
+        secondary=event_organizer_model,
         back_populates="organized_events"
     )
 
@@ -63,13 +65,16 @@ class UserModel(Model):
     role: Mapped[str]
 
     organized_events: Mapped[Optional[list[EventModel]]] = relationship(
-        secondary=EventM2MModel,
+            secondary=event_organizer_model,
         back_populates="organizers"
     )
 
 
-
-
+class EventPhoto(Model):
+    __tablename__ = "Event_photo"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    filename: Mapped[str] = mapped_column(unique=True)
+    event_id: Mapped[int] = mapped_column(ForeignKey("Events.id"))
 
 
 

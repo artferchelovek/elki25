@@ -7,7 +7,7 @@ import os
 from database import create_tables, delete_tables
 from auth import authRouter
 from events.EventRouter import eventRouter
-
+from settings import file_dir
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -28,6 +28,12 @@ app.add_middleware(
 
 app.include_router(authRouter)
 app.include_router(eventRouter)
+
+from fastapi.staticfiles import StaticFiles
+
+app.mount('/files', StaticFiles(directory=file_dir), name='files')
+
+
 
 if __name__ == "__main__":
    if not os.path.exists('backend/db'):
