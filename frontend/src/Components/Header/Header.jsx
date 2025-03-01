@@ -32,6 +32,8 @@ export default function Header() {
           <p className="header-link">Контакты</p>
         </nav>
 
+        <div className="header-palka"></div>
+
         {enter ? (
           <div className="isEnter">
             <button

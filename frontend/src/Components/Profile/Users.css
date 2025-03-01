@@ -1,0 +1,32 @@
+.events-org {
+  .title {
+    width: 80vw;
+    margin: 0 auto;
+
+    .palka {
+      margin: 20px auto;
+      width: 80%;
+      height: 2px;
+      background: #0000000c;
+    }
+
+    .title1 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      p {
+        font-size: 24px;
+      }
+
+      .create-event {
+        padding: 5px 10px;
+        font-size: 24px;
+        border: none;
+        border-radius: 10px;
+        color: white;
+        background: #414af2;
+      }
+    }
+  }
+}

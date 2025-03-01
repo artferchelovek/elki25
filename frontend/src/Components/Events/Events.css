@@ -62,3 +62,14 @@
     }
   }
 }
+
+/* сразу для телефона делаю */
+
+.event-input {
+  display: flex;
+  flex-direction: column;
+
+  input {
+    width: 70%;
+  }
+}

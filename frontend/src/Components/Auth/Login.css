@@ -54,3 +54,50 @@
     cursor: pointer;
   }
 }
+
+/* register.jsx */
+
+.split-div {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+
+  input {
+    width: 40%;
+  }
+}
+
+.choose-role {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0 auto;
+
+  .role {
+    justify-content: center;
+    display: flex;
+    width: 50%;
+
+    input {
+      margin-right: 10px;
+    }
+
+    p {
+      font-size: 24px;
+    }
+
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .role:hover {
+    background: #00000010;
+    transition: 0.4s all ease-in-out;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  #login-form {
+    width: 80vw;
+  }
+}
