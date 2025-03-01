@@ -38,4 +38,4 @@ app.mount('/files', StaticFiles(directory=file_dir), name='files')
 if __name__ == "__main__":
    if not os.path.exists('backend/db'):
       os.makedirs('backend/db')
-   uvicorn.run("main:app", host="0.0.0.0", port=8000)
+   uvicorn.run("main:app", host="0.0.0.0", port=8000, proxy_headers=True)

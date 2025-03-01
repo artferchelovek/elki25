@@ -1,5 +1,7 @@
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
+from fastapi import HTTPException
+
 
 from database import *
 from events.EventSchemas import *
@@ -28,6 +30,11 @@ class EventRepository:
             query = (select(EventModel).filter_by(id=event_id).options(selectinload(EventModel.organizers)).options(selectinload(EventModel.photo)))
             result = await session.execute(query)
             result = result.scalar()
+            if result is None:
+                raise HTTPException(
+                    status_code=404,
+                    detail='event with this ID was not found'
+                )
             res_dict = result.__dict__
             res_dict.pop('_sa_instance_state', None)
             res_dict['organizers'] = [user.id for user in res_dict['organizers']]
@@ -43,7 +50,7 @@ class EventRepository:
     async def add_photo_to_db(cls, filename: str, event_id: int) -> int:
         async with new_session() as session:
             new_photo = EventPhoto(
-                filename=str(event_id)+filename,
+                filename=str(event_id)+'_'+filename,
                 event_id=event_id
             )
             session.add(new_photo)
@@ -53,3 +60,19 @@ class EventRepository:
             except:
                 return False
             return new_photo.id
+        
+
+    @classmethod
+    async def get_all_events(cls):
+        async with new_session() as session:
+            result = await session.execute(select(EventModel).options(selectinload(EventModel.organizers)).options(selectinload(EventModel.photo)))
+            result = result.scalars().all()
+            ans = []
+            for res in result:
+                res_dict = res.__dict__
+                print(res_dict)
+                res_dict.pop('_sa_instance_state', None)
+                res_dict['organizers'] = [user.id for user in res_dict['organizers']]
+                res_dict['photo'] = [photo.filename for photo in res_dict['photo']]
+                ans.append(SEvent.model_validate(res_dict))
+            return ans
