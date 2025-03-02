@@ -25,7 +25,7 @@ export default function Register() {
       name: data.name,
       surname: data.surname,
       birthday: data.birthday,
-      role: "visitor",
+      role: data.role,
       email: "1111",
       phone_number: "+799641290794",
     };
@@ -52,6 +52,8 @@ export default function Register() {
       ...data,
       [e.target.name]: value,
     });
+
+    console.log(data);
   }
   return (
     <>
@@ -106,11 +108,23 @@ export default function Register() {
           </div>
           <div className="choose-role">
             <div className="role">
-              <input type="checkbox" name="" id="" />
+              <input
+                onChange={changeData}
+                value={"visitor"}
+                type="checkbox"
+                name="role"
+                id=""
+              />
               <p>Участник</p>
             </div>
             <div className="role">
-              <input type="checkbox" name="" id="" />
+              <input
+                onChange={changeData}
+                value={"organizer"}
+                type="checkbox"
+                name="role"
+                id=""
+              />
               <p>Организатор</p>
             </div>
           </div>

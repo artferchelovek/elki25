@@ -69,6 +69,13 @@ export default function DF_User() {
   return (
     <>
       <Header></Header>
+      <button
+        onClick={() => {
+          location.reload();
+        }}
+      >
+        reload
+      </button>
       <User_Info />
 
       <div id="sub-event">
