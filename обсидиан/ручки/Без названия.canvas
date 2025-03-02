@@ -1,0 +1,17 @@
+{
+	"nodes":[
+		{"id":"d053e5e8bc752fe0","type":"text","text":"\n```json\n{\n  \"username\": \"string\",\n  \"name\": \"string\",\n  \"surname\": \"string\",\n  \"password\": \"string\",\n  \"email\": \"string\",\n  \"birthday\": \"2025-02-28\",\n  \"phone_number\": \"86410245086\",\n  \"role\": \"visitor\"\n}\n","x":-365,"y":-120,"width":421,"height":339},
+		{"id":"291793b79fc4df88","type":"text","text":"POST /auth/register\n[[РУЧКИ АУТХ#/auth/register]]\n","x":-279,"y":-320,"width":250,"height":60},
+		{"id":"5b22c378184bad84","type":"text","text":"Код 200\n```json\n{\n  \"access_token\": \"тут будет хэ\",\n  \"token_type\": \"bearer\"\n}\n```","x":-271,"y":360,"width":234,"height":278},
+		{"id":"ee27d1c4f2aed0f8","type":"text","text":"GET /auth/me\n[[РУЧКИ АУТХ#/auth/me]]","x":920,"y":-320,"width":250,"height":60},
+		{"id":"477041543d3fd54a","type":"text","text":"# АУТХ","x":310,"y":-800,"width":250,"height":60},
+		{"id":"12fb86e81836efd4","type":"text","text":"POST /auth/login\n[[РУЧКИ АУТХ#/auth/login]]\n","x":275,"y":-320,"width":320,"height":120}
+	],
+	"edges":[
+		{"id":"7aecc2566f02207b","fromNode":"291793b79fc4df88","fromSide":"bottom","toNode":"d053e5e8bc752fe0","toSide":"top"},
+		{"id":"543596885693a3aa","fromNode":"d053e5e8bc752fe0","fromSide":"bottom","toNode":"5b22c378184bad84","toSide":"top"},
+		{"id":"5babc33b4b6becf0","fromNode":"477041543d3fd54a","fromSide":"bottom","toNode":"291793b79fc4df88","toSide":"top"},
+		{"id":"3584a698e0c59c5a","fromNode":"477041543d3fd54a","fromSide":"bottom","toNode":"12fb86e81836efd4","toSide":"top"},
+		{"id":"06bb18ddc81c7480","fromNode":"477041543d3fd54a","fromSide":"bottom","toNode":"ee27d1c4f2aed0f8","toSide":"top"}
+	]
+}

@@ -1,0 +1,215 @@
+{
+  "main": {
+    "id": "7eaed036e8cd8854",
+    "type": "split",
+    "children": [
+      {
+        "id": "909b4e8a41a4f9f5",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3e279d501308bfe8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "ручки/РУЧКИ АУТХ.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "РУЧКИ АУТХ"
+            }
+          },
+          {
+            "id": "0fdc911b50258ef0",
+            "type": "leaf",
+            "state": {
+              "type": "canvas",
+              "state": {
+                "file": "ручки/Без названия.canvas",
+                "viewState": {
+                  "x": 402.5,
+                  "y": -81,
+                  "zoom": -0.7174584004191908
+                }
+              },
+              "icon": "lucide-layout-dashboard",
+              "title": "Без названия"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "de50d005252762f9",
+    "type": "split",
+    "children": [
+      {
+        "id": "f80a29bc10af86b4",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5cffb2ac9997f3bd",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Файловый менеджер"
+            }
+          },
+          {
+            "id": "b5f22c49539de18a",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Поиск"
+            }
+          },
+          {
+            "id": "5a7c231990cf9202",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Закладки"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "1475d3df61c92a61",
+    "type": "split",
+    "children": [
+      {
+        "id": "08be8ee5f390098c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9140fd5cb89c1715",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Обратные ссылки"
+            }
+          },
+          {
+            "id": "5951ac4a075416e8",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Исходящие ссылки"
+            }
+          },
+          {
+            "id": "74f1082a9d081f01",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Теги"
+            }
+          },
+          {
+            "id": "a8efe75e027cb1b6",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Структура"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Меню быстрого перехода": false,
+      "graph:Граф": false,
+      "canvas:Создать новый холст": false,
+      "daily-notes:Сегодняшняя заметка": false,
+      "templates:Вставить шаблон": false,
+      "command-palette:Открыть палитру команд": false,
+      "obsidian-livesync:Show Log": false,
+      "obsidian-livesync:Replicate": false,
+      "obsidian-livesync:P2P Replicator": false,
+      "obsidian-livesync:Show Customization sync": false
+    }
+  },
+  "active": "0fdc911b50258ef0",
+  "lastOpenFiles": [
+    "ручки/платформы.canvas",
+    "ручки/РУЧКИ АУТХ.md",
+    "ручки/РУЧКИ ИВЕНТ.md",
+    "Pasted image 20250228225205.png",
+    "Pasted image 20250302022745.png",
+    "Pasted image 20250302022759.png",
+    "хранить.md",
+    "фронт.md",
+    "фигма.md",
+    "многие ко многим.canvas",
+    "контрольные точки.md",
+    "записки.md",
+    "взаимодействие с площадкой.canvas",
+    "идеи.md",
+    "ручки/Без названия.canvas",
+    "здравствуйте.md",
+    "площадка ((киллерфича, без которой все же никуда)).canvas",
+    "ручки",
+    "кейсодатели эщкере.md",
+    "Продам гараж.md",
+    "Тест.md",
+    "Добро пожаловать.md"
+  ]
+}

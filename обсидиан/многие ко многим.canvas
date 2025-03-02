@@ -1,0 +1,14 @@
+{
+	"nodes":[
+		{"id":"0127e2e804297179","type":"text","text":"Мероприятие\n---\nайди 1\nорги 1,2","x":-60,"y":-240,"width":250,"height":60},
+		{"id":"780d63c199838f69","type":"text","text":"# Организатор 1\n---\nайди 1\nмп 1\n","x":-540,"y":-240,"width":320,"height":200},
+		{"id":"660b73370f79a076","type":"text","text":"# Организатор 2\n---\nайди 2\nмп 1, 2\n\n","x":-540,"y":40,"width":320,"height":200},
+		{"id":"ee211d669f2ebb79","type":"text","text":"айди 2\nорги 2\n","x":-60,"y":110,"width":250,"height":60},
+		{"id":"8d0651cd4a575697","type":"file","file":"Pasted image 20250228225205.png","x":-440,"y":-560,"width":519,"height":260}
+	],
+	"edges":[
+		{"id":"ebe76a31ba573ce5","fromNode":"780d63c199838f69","fromSide":"right","toNode":"0127e2e804297179","toSide":"left"},
+		{"id":"465668042340e675","fromNode":"660b73370f79a076","fromSide":"right","toNode":"0127e2e804297179","toSide":"left"},
+		{"id":"ba8dac4aa8249fb9","fromNode":"660b73370f79a076","fromSide":"right","toNode":"ee211d669f2ebb79","toSide":"left"}
+	]
+}
