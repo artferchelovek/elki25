@@ -1,5 +1,7 @@
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
+from fastapi import HTTPException
+
 
 from database import *
 from users.UserSchemas import *
@@ -41,10 +43,22 @@ class UserRepository:
     @classmethod
     async def subscribe_user(cls, user_id: int, event_id: int):
         async with new_session() as session:
-            user = await session.execute(select(UserModel).filter_by(id=user_id).options(selectinload(UserModel.registered_at)))
-            user = user.scalar()
-            event = await session.execute(select(EventModel).filter_by(id=event_id))
-            event = event.scalar()
+            try:
+                user = await session.execute(select(UserModel).filter_by(id=user_id).options(selectinload(UserModel.registered_at)))
+                user = user.scalar()
+            except:
+                raise HTTPException(
+                    status_code=404,
+                    details='user not found'
+                )
+            try:
+                event = await session.execute(select(EventModel).filter_by(id=event_id))
+                event = event.scalar()
+            except:
+                raise HTTPException(
+                    status_code=404,
+                    detail='event not found'
+                )
             user.registered_at.append(event)
             try:
                 await session.flush()
@@ -56,10 +70,22 @@ class UserRepository:
     @classmethod
     async def unsubscribe_user(cls, user_id: int, event_id: int):
         async with new_session() as session:
-            user = await session.execute(select(UserModel).filter_by(id=user_id).options(selectinload(UserModel.registered_at)))
-            user = user.scalar()
-            event = await session.execute(select(EventModel).filter_by(id=event_id))
-            event = event.scalar()
+            try:
+                user = await session.execute(select(UserModel).filter_by(id=user_id).options(selectinload(UserModel.registered_at)))
+                user = user.scalar()
+            except:
+                raise HTTPException(
+                    status_code=404,
+                    details='user not found'
+                )
+            try:
+                event = await session.execute(select(EventModel).filter_by(id=event_id))
+                event = event.scalar()
+            except:
+                raise HTTPException(
+                    status_code=404,
+                    detail='event not found'
+                )
             user.registered_at.remove(event)
             try:
                 await session.flush()
