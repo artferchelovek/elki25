@@ -63,6 +63,7 @@ class EventModel(Model):
     #---------------------------------------------------------
     # Платформы
     platform_id: Mapped[Optional[int]] = mapped_column(ForeignKey('Platform_places.id'))
+    otstoinik: Mapped[str]
     #---------------------------------------------------------
 
 

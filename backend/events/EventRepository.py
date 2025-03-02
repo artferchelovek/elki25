@@ -13,6 +13,7 @@ class EventRepository:
         async with new_session() as session:
             data = event.model_dump()
             new_event = EventModel(**data)
+            new_event.otstoinik = 'not_accepted'
             session.add(new_event)
             organizer = await session.get(UserModel, organizer.id)
             await session.refresh(new_event, attribute_names=["organizers","platform_id"])
@@ -29,6 +30,7 @@ class EventRepository:
         async with new_session() as session:
             query = (select(EventModel)
                      .filter_by(id=event_id)
+                     .filter_by(otstoinik='accepted')
                      .options(selectinload(EventModel.organizers))
                      .options(selectinload(EventModel.photo))
                      .options(selectinload(EventModel.visitors))
@@ -72,6 +74,7 @@ class EventRepository:
     async def get_all_events(cls):
         async with new_session() as session:
             result = await session.execute(select(EventModel)
+                                           .filter_by(otstoinik='accepted')
                                            .options(selectinload(EventModel.organizers))
                                            .options(selectinload(EventModel.photo))
                                            .options(selectinload(EventModel.visitors))
@@ -83,6 +86,6 @@ class EventRepository:
                 res_dict.pop('_sa_instance_state', None)
                 res_dict['organizers'] = [user.id for user in res_dict['organizers']]
                 res_dict['photo'] = [photo.filename for photo in res_dict['photo']]
-                res_dict['visitors'] = [photo.visitors for photo in res_dict['visitors']]
+                res_dict['visitors'] = [photo.id for photo in res_dict['visitors']]
                 ans.append(SEvent.model_validate(res_dict))
             return ans

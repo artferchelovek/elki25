@@ -124,5 +124,6 @@ async def read_users_me(
             "email": current_user.email,
             "birthday": current_user.birthday,
             "phone_number": current_user.phone_number,
-            "organized_events": current_user.organized_events
+            "organized_events": current_user.organized_events,
+            "registered_at": current_user.registered_at
     }

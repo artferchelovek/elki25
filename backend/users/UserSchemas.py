@@ -36,5 +36,6 @@ class SUser(BaseModel):
 
     organized_events: Optional[list[int]]
     registered_at: Optional[list[int]]
-
+    assigned_platform: Optional[int]
+    
     model_config = ConfigDict(from_attributes=True)
