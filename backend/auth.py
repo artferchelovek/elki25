@@ -14,7 +14,7 @@ from users.UserSchemas import *
 
 
 authRouter = APIRouter(
-    prefix="/auth",
+    prefix="/api/auth",
     tags=["Аутентификация"]
 )
 
@@ -27,7 +27,7 @@ class TokenData(BaseModel):
     username: str | None = None
 
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

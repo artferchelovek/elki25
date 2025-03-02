@@ -34,7 +34,7 @@ app.include_router(userRouter)
 
 from fastapi.staticfiles import StaticFiles
 
-app.mount('/files', StaticFiles(directory=file_dir), name='files')
+app.mount('/api/files', StaticFiles(directory=file_dir), name='files')
 
 
 

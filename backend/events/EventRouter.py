@@ -13,7 +13,7 @@ from users.UserSchemas import *
 from users.UserRepository import *
 
 eventRouter = APIRouter(
-    prefix='/event',
+    prefix='/api/event',
     tags=['Мероприятия']
 )
 
