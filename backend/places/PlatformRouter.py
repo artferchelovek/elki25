@@ -9,7 +9,7 @@ from users.UserSchemas import *
 from auth import get_current_user
 
 platformRouter = APIRouter(
-    prefix='/platform',
+    prefix='/api/platform',
     tags=['Платформы']
 )
 
