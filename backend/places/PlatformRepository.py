@@ -59,6 +59,8 @@ class PlatformRepository:
             new_platform = PlatformPlace(**data)
             session.add(new_platform)
             new_platform.assigned_admin = platform_admin.id
+            user = await session.get(UserModel, platform_admin.id)
+            user.assigned_platform = new_platform.id
             try:
                 await session.flush()
                 await session.commit()
