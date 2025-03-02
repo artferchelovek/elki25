@@ -10,6 +10,10 @@ import SelectRole from "./Components/Profile/Main_Profile.jsx";
 import DF_User, { ORG_User } from "./Components/Profile/User.jsx";
 import Register from "./Components/Auth/Register.jsx";
 
+import { registerSW } from "virtual:pwa-register";
+
+registerSW({ immediate: true });
+
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <Routes>

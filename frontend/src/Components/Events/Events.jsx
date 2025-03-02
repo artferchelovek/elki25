@@ -81,7 +81,6 @@ export default function Events() {
     </>
   );
 }
-
 export function AddMP() {
   const navigate = useNavigate();
 
