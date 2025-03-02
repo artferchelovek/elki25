@@ -2,7 +2,7 @@ import axios from "axios";
 import Header from "../Header/Header";
 import "./Events.css";
 import "./AddEvent.css";
-const api = "http://192.168.0.181:8000/event/add";
+const api = "http://192.168.10.176:8000/event/add";
 
 const token = localStorage.getItem("token");
 
@@ -12,7 +12,7 @@ const header = {
 };
 
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 export default function Events() {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ export default function Events() {
   useEffect(() => {
     async function getallmp() {
       const response = await axios.get(
-        "http://192.168.0.181:8000/event/getAll"
+        "http://192.168.10.176:8000/event/getAll"
       );
 
       const json = response.data;
@@ -55,7 +55,7 @@ export default function Events() {
           {mp.map((event) => (
             <div key={event.id} className="event">
               <img
-                src={`http://192.168.0.181:8000/files/${event.photo[0]}`}
+                src={`http://192.168.10.176:8000/files/${event.photo[0]}`}
                 alt=""
                 className="event-img"
               />
@@ -67,7 +67,7 @@ export default function Events() {
               </div>
               <button
                 onClick={() => {
-                  navigate();
+                  navigate(`${event.id}`);
                 }}
                 value={event.id}
                 className="event-open"
@@ -95,7 +95,7 @@ export function AddMP() {
     date: "",
     time: "",
     direct: "",
-    phone: "+7",
+    phone: "8",
     new_date: "",
   });
 
@@ -154,6 +154,7 @@ export function AddMP() {
 
       const formData = new FormData();
       const image = document.getElementById("event-img-in");
+      console.log(image.files);
       console.log(image.files[0]);
       formData.append("uploaded_file", image.files[0]);
 
@@ -168,6 +169,8 @@ export function AddMP() {
         }
       );
       console.log(send.data, send.status);
+
+      navigate("/profile");
     } catch (e) {
       console.log(e);
     }
@@ -180,7 +183,14 @@ export function AddMP() {
         <p className="step">{step} этап</p>
         <div id="event1" className="event-content">
           <div className="event-img">
-            <input type="file" name="image" id="event-img-in" />
+            <input
+              onChange={(e) => {
+                console.log(e.target.files);
+              }}
+              type="file"
+              name="image"
+              id="event-img-in"
+            />
           </div>
           <input
             onChange={changeData}
@@ -258,9 +268,86 @@ export function AddMP() {
 }
 
 export function CheckMP() {
+  let { id } = useParams();
+  const [mp, setMp] = useState([]);
+  const [photo, setPhoto] = useState("#");
+  const [time, setTime] = useState(["NamedNodeMap", "none"]);
+  console.log(mp);
+
+  useEffect(() => {
+    async function GetoMP() {
+      try {
+        const response = await axios.get(
+          `http://192.168.10.176:8000/event/get/${id}`
+        );
+        console.log(response.data);
+
+        setMp(response.data);
+        setPhoto(`http://192.168.10.176:8000/files/${response.data.photo[0]}`);
+        setTime([
+          response.data.event_datetime.slice(0, 10),
+          response.data.event_datetime.slice(11, 16),
+        ]);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
+    GetoMP();
+  }, []);
+
+  async function Subscribe(eventid) {
+    try {
+      console.log(token);
+
+      const pus = "";
+
+      const res = await axios.post(
+        `http://192.168.10.176:8000/user/subscribe?event_id=${eventid}`,
+        pus,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log(res.data);
+      alert("Успешно!");
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   return (
     <>
-      <p className="">сеaс</p>
+      <Header></Header>
+
+      <div className="event-check">
+        <div className="event-img">
+          <img src={photo} alt="" />
+        </div>
+        <div className="event-title"> {mp.event_name} </div>
+        <div className="event-shtdes">
+          <p>{mp.short_description}</p>
+          <div className="event-split">
+            <p>{time[0]}</p>
+            <p>{time[1]}</p>
+          </div>
+        </div>
+        <div className="event-des"> {mp.description} </div>
+      </div>
+
+      <div className="event-subscr">
+        <button
+          onClick={() => {
+            Subscribe(mp.id);
+          }}
+          className="event-subscr-btn"
+        >
+          Я приду!
+        </button>
+      </div>
     </>
   );
 }

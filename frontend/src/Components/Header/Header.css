@@ -4,7 +4,7 @@
   box-shadow: 0px 4px 64px -8px rgba(188, 154, 154, 0.25);
 
   margin: 50px auto;
-  padding: 5px 25px;
+  padding: 25px 50px;
 
   align-items: center;
   display: flex;
@@ -13,12 +13,15 @@
   border-radius: 20px;
 
   .header-name {
+    justify-self: flex-start;
     font-size: 36px;
     font-weight: 700;
     letter-spacing: -4%;
   }
 
   .header-nav {
+    margin: 0 auto;
+    justify-self: center;
     display: flex;
     gap: 50px;
     justify-content: space-between;
@@ -55,8 +58,15 @@
   }
 }
 
+.header-nav-m {
+  display: none;
+}
+
 @media screen and (max-width: 900px) {
   #header {
+    margin: 30px auto 5px auto;
+    padding: 10px 0px;
+    width: 80vw;
     flex-direction: column;
     justify-content: center;
 
@@ -65,19 +75,40 @@
     }
 
     .header-palka {
-      width: 90%;
-      height: 2px;
-      margin: 10px auto;
-      background: #00000011;
+      display: none;
+    }
+
+    .header-login {
+      display: none;
     }
 
     .isEnter {
-      width: 30%;
-      justify-content: space-between;
+      display: none;
 
       .header-login {
-        font-size: 24px;
+        display: none;
       }
+    }
+  }
+
+  .header-nav-m {
+    margin: 0 auto;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    width: 80%;
+    p {
+      font-size: 18px;
+    }
+
+    .header-login {
+      color: white;
+      font-weight: 600;
+      padding: 5px 15px;
+      font-size: 18px;
+      background: #414af2;
+      border: 1px solid white;
+      border-radius: 10px;
     }
   }
 }

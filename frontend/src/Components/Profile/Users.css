@@ -40,11 +40,12 @@
   gap: 10px;
 
   .eventik {
-    cursor: pointer;
-    border-radius: 10px;
-    width: 90%;
-    padding: 10px;
-    background: white;
+    width: 90vw;
+    margin: 10px auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 
     .eventik-img {
       max-width: 100%;
@@ -97,10 +98,123 @@
     }
   }
 
-  #events-form {
+  #sub-event {
+    .sub-title {
+      width: 90%;
+      margin: 0 auto;
+      .palka {
+        width: 100%;
+      }
+    }
+  }
+
+  .sub-events {
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(5, 1fr);
     gap: 20px;
+  }
+
+  #events-form {
+    display: grid;
+    grid-template-columns: repeat(5, 2fr);
+    grid-template-rows: repeat(5, 2fr);
+    gap: 20px;
+  }
+}
+
+#user-info {
+  width: 90vw;
+  margin: 30px auto;
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    .user-logo {
+      width: 150px;
+      height: 150px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .user-name {
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .user-phlog {
+      font-size: 18px;
+      font-weight: 400;
+    }
+  }
+}
+
+#sub-event {
+  margin: 0 auto;
+  .sub-title {
+    width: 80vw;
+    margin: 0 auto;
+    text-align: center;
+
+    .palka {
+      margin: 10px auto;
+      width: 80%;
+      height: 2px;
+      background: #0000000c;
+    }
+
+    p {
+      font-size: 24px;
+      font-weight: 600;
+    }
+  }
+
+  .sub-events {
+    width: 100%;
+
+    .eventik {
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto;
+      cursor: pointer;
+      border-radius: 10px;
+      width: 90%;
+      padding: 10px;
+      background: white;
+
+      .eventik-img {
+        max-width: 100%;
+      }
+
+      .eventik-title {
+        margin-top: 20px;
+        line-height: 28px;
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .eventik-shd {
+        margin-top: 5px;
+        font-weight: normal;
+      }
+
+      .eventik-split {
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+
+        p {
+          font-weight: 600;
+        }
+      }
+    }
   }
 }
