@@ -80,10 +80,9 @@ class EventRepository:
             ans = []
             for res in result:
                 res_dict = res.__dict__
-                print(res_dict)
                 res_dict.pop('_sa_instance_state', None)
                 res_dict['organizers'] = [user.id for user in res_dict['organizers']]
                 res_dict['photo'] = [photo.filename for photo in res_dict['photo']]
-                res_dict['visitors'] = [photo.visitors for photo in res_dict['visitors']]
+                res_dict['visitors'] = [photo.id for photo in res_dict['visitors']]
                 ans.append(SEvent.model_validate(res_dict))
             return ans
