@@ -14,7 +14,7 @@ from users.UserSchemas import *
 
 
 authRouter = APIRouter(
-    prefix="/auth",
+    prefix="/api/auth",
     tags=["Аутентификация"]
 )
 
@@ -27,7 +27,7 @@ class TokenData(BaseModel):
     username: str | None = None
 
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -76,6 +76,8 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
     user = await UserRepository.get_user(token_data.username)
     if user is None:
         raise credentials_exception
+    if not user:
+        raise credentials_exception
     return user
 
 
@@ -99,7 +101,12 @@ async def login_for_access_token(
 @authRouter.post("/register")
 async def register(user: SUserRegister) -> Token:
     user.password = get_password_hash(user.password)
-    await UserRepository.register_user(user)
+    if not await UserRepository.register_user(user):
+        raise HTTPException(
+            status_code=401,
+            detail="User with this username is already exists",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
         data={"sub": user.username}, expires_delta=access_token_expires
@@ -111,7 +118,13 @@ async def read_users_me(
     current_user: Annotated[SUser, Depends(get_current_user)],
 ):
     return {"username": current_user.username,
+            "role": current_user.role,
+            "name": current_user.name,
+            "surname": current_user.surname,
             "email": current_user.email,
             "birthday": current_user.birthday,
-            "phone_number": current_user.phone_number
+            "phone_number": current_user.phone_number,
+            "organized_events": current_user.organized_events,
+            "registered_at": current_user.registered_at,
+            "assigned_platform": current_user.assigned_platform
     }
